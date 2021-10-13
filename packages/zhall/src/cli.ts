@@ -1,5 +1,5 @@
-import yParser from 'yargs-parser';
 // import { Service } from '@zhall/core';
+import { yParser } from '@zhall/utils';
 
 const args = yParser(process.argv.slice(2), {
   alias: {
