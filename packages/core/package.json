@@ -1,0 +1,32 @@
+{
+  "name": "@zhall/core",
+  "version": "0.0.0",
+  "description": "@zhall/core",
+  "keywords": [
+    "zhall"
+  ],
+  "author": "zhangheng <zhangheng_0317@outlook.com>",
+  "homepage": "https://github.com/zhangheng0317/zhall#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangheng0317/zhall.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/zhangheng0317/zhall/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "tapable": "^2.2.1"
+  }
+}
