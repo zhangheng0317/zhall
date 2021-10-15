@@ -4,7 +4,7 @@ import { ICommand, IConfig, IHook, IPackage, IPlugin, IPreset } from './types';
 import { getPreset } from './utils';
 import { AsyncParallelHook } from 'tapable';
 
-interface IServiceOptions {
+interface IServiceOpts {
   cwd: string;
   pkg: IPackage;
   presets: string[];
@@ -23,9 +23,6 @@ class Service extends EventEmitter {
   // plugin methods
   pluginMethods: { [name: string]: Function } = {};
 
-  // initialPresets: IPreset[];
-  // initialPlugins: IPlugin[];
-
   // hooks
   hooks: { [key: string]: IHook[] } = {};
   hooksByPluginId: { [id: string]: IHook[] } = {};
@@ -33,18 +30,21 @@ class Service extends EventEmitter {
   // userConfig: IConfig;
   contig: IConfig | null = null;
 
-  constructor(options: IServiceOptions) {
+  constructor(opts: IServiceOpts) {
     super();
 
-    console.log('options:\n', options);
-    this.cwd = options.cwd || process.cwd();
-    this.pkg = options.pkg;
+    // console.log('options:\n', opts);
+    this.cwd = opts.cwd || process.cwd();
+    this.pkg = opts.pkg;
 
     this.presets = getPreset({
       cwd: this.cwd,
       pkg: this.pkg,
-      presets: options.presets || [],
+      presets: opts.presets || [],
     });
+    console.log('# 预设插件');
+    console.log(this.presets, '\n');
+
     // this.plugins = options.plugins;
   }
 
@@ -69,6 +69,8 @@ class Service extends EventEmitter {
         this.hooks[key] = (this.hooks[key] || []).concat(hook);
       });
     });
+    console.log('# hooks');
+    console.log(this.hooks, '\n');
 
     //
   }

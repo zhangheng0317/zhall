@@ -1,6 +1,6 @@
 export default {
   target: 'node',
-  cjs: { type: 'babel', lazy: true },
+  cjs: { type: 'babel' },
   disableTypeCheck: true,
   pkgs: ['utils', 'zhall', 'core'],
 };

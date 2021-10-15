@@ -1,5 +1,6 @@
 import { IPackage, IPlugin } from './types';
 import resolve from 'resolve';
+import { winPath } from '@zhall/utils';
 interface PresetOptions {
   cwd: string;
   pkg: IPackage;
@@ -7,9 +8,6 @@ interface PresetOptions {
 }
 
 export function getPreset(options: PresetOptions): IPlugin[] {
-  console.log('配置插件');
-
-  // 获取插件的绝对地址
   const presets = options.presets.map((path) => {
     if (typeof path !== 'string') {
       throw new Error(
@@ -22,13 +20,9 @@ export function getPreset(options: PresetOptions): IPlugin[] {
     });
   });
 
-  return presets.map((path) => {
-    // if(wclsin)
-
-    return {
-      id: '',
-      apply: () => {},
-      path: '',
-    };
-  });
+  return presets.map((path) => ({
+    id: winPath(path).replace(/\.js$/, ''),
+    path: winPath(path),
+    apply: require(path).default,
+  }));
 }

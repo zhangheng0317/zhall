@@ -27,6 +27,6 @@
     "access": "public"
   },
   "dependencies": {
-    "tapable": "^2.2.1"
+    "@zhall/utils": "^0.0.0"
   }
 }
