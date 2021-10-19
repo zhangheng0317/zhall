@@ -1,5 +1,5 @@
 16 error Error: Command failed with exit code 1: git remote update
-16 error fatal: unable to access 'https://github.com/zhangheng0317/zhall.git/': OpenSSL SSL_read: Connection was reset, errno 10054
+16 error fatal: unable to access 'https://github.com/zhangheng0317/zhall.git/': Failed to connect to github.com port 443 after 21070 ms: Timed out
 16 error error: Could not fetch origin
 16 error Fetching origin
 16 error     at makeError (C:\ENV\Node\node_global\node_modules\lerna\node_modules\execa\lib\error.js:60:11)
