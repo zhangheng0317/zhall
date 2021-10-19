@@ -12,15 +12,9 @@
   "homepage": "https://github.com/zhangheng0317/zhall",
   "license": "MIT",
   "main": "lib/index.js",
-  "types": "types.d.ts",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
-    "dist",
-    "types.d.ts",
     "bin"
   ],
   "repository": {

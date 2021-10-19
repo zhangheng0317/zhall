@@ -1,7 +1,11 @@
 import { Service } from '@zhall/core';
-import { yParser } from '@zhall/utils';
+import { chalk, yParser } from '@zhall/utils';
 import { join } from 'path';
 
+/**
+ * zhall [args]
+ * -v -version
+ */
 const args = yParser(process.argv.slice(2), {
   alias: {
     version: ['v'],
@@ -12,24 +16,39 @@ const args = yParser(process.argv.slice(2), {
 
 console.log(args, '\n');
 
+if (args.version) {
+  const version = require('../package.json').version;
+  console.log(`${chalk.gray('zhall')} ${version}`);
+  process.exit(0);
+}
+if (!args._[0]) {
+  console.log(`
+${chalk.red('请使用zhall [command] [options]命令格式')}
+${chalk.gray(`
+command:
+  dev        开启服务
+  generate   生成临时文件
+
+options:
+  -v --version 查看版本
+`)}`);
+  process.exit(1);
+}
+
 (async function () {
   const service = new Service({
     cwd: process.cwd(),
     pkg: require(join(process.cwd(), 'package.json')),
     presets: [
-      require.resolve('./plugins/commands/dev'),
-      require.resolve('./plugins/generateFiles/plugin'),
-      require.resolve('./plugins/generateFiles/routes'),
-      require.resolve('./plugins/generateFiles/polyfill'),
-      require.resolve('./plugins/generateFiles/exports'),
+      require.resolve('./presets/commands/dev'),
+      require.resolve('./presets/commands/generate'),
+      require.resolve('./presets/generateFiles/plugin'),
+      require.resolve('./presets/generateFiles/routes'),
+      require.resolve('./presets/generateFiles/polyfill'),
+      require.resolve('./presets/generateFiles/exports'),
     ],
-    plugins: [
-      // { id: 'dev', apply: require('./plugins/commands/dev') },
-      // { id: 'history', apply: require('./plugins/generateFiles/history') },
-      // { id: 'routes', apply: require('./plugins/generateFiles/routes') },
-      // { id: 'runtime', apply: require('./plugins/generateFiles/plugin') },
-    ],
+    plugins: [],
   });
 
-  await service.run({ name: 'dev' });
+  await service.run({ name: args._[0] });
 })();

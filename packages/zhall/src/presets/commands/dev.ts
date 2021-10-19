@@ -1,6 +1,7 @@
+import { Server } from '@zhall/core';
 import { IPluginAPI } from '@zhall/core';
 
-const plugin = (api: IPluginAPI) => {
+export default (api: IPluginAPI) => {
   api.registerCommand({
     name: 'dev',
     description: '启动服务',
@@ -9,9 +10,8 @@ const plugin = (api: IPluginAPI) => {
       await api.service.applyPlugins({
         key: 'onGenerateFiles',
       });
-      // new Server().start();
+      // TODO 启动服务
+      await new Server().run();
     },
   });
 };
-
-export default plugin;

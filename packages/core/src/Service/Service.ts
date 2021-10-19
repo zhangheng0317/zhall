@@ -1,8 +1,9 @@
 import { EventEmitter } from 'events';
-import PluginAPI from './PluginAPI';
-import { ICommand, IConfig, IHook, IPackage, IPlugin, IPreset } from './types';
-import { getPreset } from './utils';
 import { AsyncParallelHook } from 'tapable';
+import Config from '../Config/Config';
+import { ICommand, IConfig, IHook, IPackage, IPlugin, IPreset } from '../types';
+import PluginAPI from './PluginAPI';
+import { getPlugins } from './utils';
 
 interface IServiceOpts {
   cwd: string;
@@ -29,6 +30,7 @@ class Service extends EventEmitter {
   // config
   // userConfig: IConfig;
   contig: IConfig | null = null;
+  userConfig: IConfig;
 
   constructor(opts: IServiceOpts) {
     super();
@@ -37,15 +39,29 @@ class Service extends EventEmitter {
     this.cwd = opts.cwd || process.cwd();
     this.pkg = opts.pkg;
 
-    this.presets = getPreset({
+    console.log('# 获取配置');
+    const configInstance = new Config({
+      cwd: this.cwd,
+      service: this,
+    });
+    this.userConfig = configInstance.getUserConfig();
+    console.log(this.userConfig);
+
+    this.presets = getPlugins({
       cwd: this.cwd,
       pkg: this.pkg,
-      presets: opts.presets || [],
+      plugins: opts.presets || [],
     });
-    console.log('# 预设插件');
-    console.log(this.presets, '\n');
+    // console.log('# 预设插件');
+    // console.log(this.presets, '\n');
 
-    // this.plugins = options.plugins;
+    this.plugins = getPlugins({
+      cwd: this.cwd,
+      pkg: this.pkg,
+      plugins: opts.plugins || [],
+    });
+    // console.log('# 额外插件');
+    // console.log(this.plugins, '\n');
   }
 
   async init() {
@@ -60,6 +76,7 @@ class Service extends EventEmitter {
       const api = new PluginAPI({ id: plugin.id, service: this });
       plugin.apply(api);
     }
+
     // initHooks
     Object.keys(this.hooksByPluginId).forEach((id) => {
       const hooks = this.hooksByPluginId[id];
@@ -69,8 +86,8 @@ class Service extends EventEmitter {
         this.hooks[key] = (this.hooks[key] || []).concat(hook);
       });
     });
-    console.log('# hooks');
-    console.log(this.hooks, '\n');
+    // console.log('# hooks');
+    // console.log(this.hooks, '\n');
 
     //
   }
@@ -90,6 +107,7 @@ class Service extends EventEmitter {
   }
 
   async runCommand(opts: { name: string }) {
+    if (!opts.name) opts.name = 'help';
     const command = this.commands[opts.name];
     return command.fn();
   }

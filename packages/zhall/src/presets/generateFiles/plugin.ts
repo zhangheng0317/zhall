@@ -1,13 +1,11 @@
 import { IPluginAPI } from '@zhall/core';
 
-const plugin = (api: IPluginAPI) => {
+export default (api: IPluginAPI) => {
   const {
     utils: { Mustache },
   } = api;
 
   api.onGenerateFiles(async () => {
-    console.log('# 生成plugin');
+    api.writeTmpFile({ path: 'plugin.ts', content: '生成plugin.ts文件' });
   });
 };
-
-export default plugin;

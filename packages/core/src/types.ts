@@ -32,6 +32,17 @@ export interface IPlugin {
   isPreset?: boolean;
 }
 
-export interface IConfig {}
+export interface IConfig {
+  presets?: string[];
+  plugins?: string[];
+  [key: string]: any;
+}
+
+export interface IRoute {
+  component?: any;
+  exact?: boolean;
+  title?: string;
+  [key: string]: any;
+}
 
 export interface IPreset extends IPlugin {}
