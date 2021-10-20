@@ -1,6 +1,6 @@
 {
   "name": "@zhall/core",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "@zhall/core",
   "keywords": [
     "zhall"
@@ -27,6 +27,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@zhall/utils": "^0.0.0"
+    "@zhall/utils": "^0.0.1"
   }
 }

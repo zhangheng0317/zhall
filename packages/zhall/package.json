@@ -1,6 +1,6 @@
 {
   "name": "zhall",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "zhall",
   "main": "index.js",
   "types": "types.d.ts",
@@ -32,8 +32,8 @@
     "url": "https://github.com/zhangheng0317/zhall/issues"
   },
   "dependencies": {
-    "@zhall/core": "^0.0.0",
-    "@zhall/utils": "^0.0.0",
+    "@zhall/core": "^0.0.1",
+    "@zhall/utils": "^0.0.1",
     "v8-compile-cache": "^2.3.0"
   }
 }
