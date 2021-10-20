@@ -1,1 +1,4 @@
-export * from './lib/cjs';
+// @ts-ignore
+export * from '@@/exports';
+export * from './lib/index';
+

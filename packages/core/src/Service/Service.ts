@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { AsyncParallelHook } from 'tapable';
+import { tapable } from '@zhall/utils';
 import Config from '../Config/Config';
 import { ICommand, IConfig, IHook, IPackage, IPlugin, IPreset } from '../types';
 import PluginAPI from './PluginAPI';
@@ -94,7 +94,7 @@ class Service extends EventEmitter {
 
   async applyPlugins(opts: { key: string }) {
     const hooks = this.hooks[opts.key] || [];
-    const tEvent = new AsyncParallelHook(['_']);
+    const tEvent = new tapable.AsyncParallelHook(['_']);
     for (const hook of hooks) {
       tEvent.tapPromise({ name: hook.pluginId! }, hook.fn);
     }

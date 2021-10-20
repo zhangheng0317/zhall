@@ -6,7 +6,11 @@ interface IOpts {
   service: Service;
 }
 
-const DEFAULT_CONFIG_FILES = ['config/config.ts', 'config/config.js'];
+const DEFAULT_CONFIG_FILES = [
+  'config/config.ts',
+  'config/config.js',
+  '.umirc.ts',
+];
 
 function compatESModuleRequire<T extends { __esModule: boolean; default: any }>(
   m: T,
@@ -32,18 +36,11 @@ class Config {
 
   getUserConfig() {
     const configFile = this.getConfigFile();
-    // console.log('configFile', configFile);
-
     if (configFile) {
       let envConfigFile;
-
-      // 判断是否存在环境配置 config.dev.ts
+      // 判断是否存在环境配置 config.dev.ts/config.pro.ts/...
       if (process.env.ZHALL_ENV) {
-        const envConfigFileName = this.addAffix(
-          configFile,
-          process.env.ZHALL_ENV,
-        );
-        console.log(envConfigFileName);
+        envConfigFile = this.addAffix(configFile, process.env.ZHALL_ENV);
       }
 
       // 获取配置文件
@@ -56,7 +53,7 @@ class Config {
 
       let config = {};
       files.map((file) => {
-        console.log('59', require(file));
+        console.log('59', require(file).default);
       });
 
       console.log('#配置');

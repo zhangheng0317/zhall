@@ -1,3 +1,5 @@
 import { IConfig } from '@zhall/core';
 
-export declare function defineConfig(config: IConfig): IConfig;
+export function defineConfig(config: IConfig): IConfig {
+  return config;
+}

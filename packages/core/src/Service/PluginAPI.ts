@@ -1,11 +1,9 @@
 import * as utils from '@zhall/utils';
-import fs from 'fs';
-import path from 'path';
 import Service from './Service';
 import { ICommand, IHook, IPlugin } from '../types';
 import { getPaths } from './utils';
 
-const { rimraf, chalk } = utils;
+const { chalk, fs, path } = utils;
 
 interface IOpts {
   id: string;

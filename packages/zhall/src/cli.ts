@@ -36,6 +36,10 @@ options:
 }
 
 (async function () {
+  const name = args._[0];
+  if (name === 'build') {
+    process.env.NODE_ENV = 'production';
+  }
   const service = new Service({
     cwd: process.cwd(),
     pkg: require(join(process.cwd(), 'package.json')),
@@ -50,5 +54,5 @@ options:
     plugins: [],
   });
 
-  await service.run({ name: args._[0] });
+  await service.run({ name });
 })();
